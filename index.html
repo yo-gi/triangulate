@@ -32,6 +32,7 @@
             this.num_steps = 15;
             this.deviation = 100;
             this.num_color_sample_points = 15;
+            this.percent_of_points_to_discard = 30;
         };
         option_selectors = new selectors();
         gui.add(this.option_selectors, "laplace_thresh", 1, 100);
@@ -39,6 +40,7 @@
         gui.add(this.option_selectors, 'num_steps', 1, 100);
         gui.add(this.option_selectors, 'deviation', 1, 500);
         gui.add(this.option_selectors, 'num_color_sample_points', 1, 100);
+        gui.add(this.option_selectors, 'percent_of_points_to_discard', 1, 100);
 
         /* Upload Image Button */
         function uploadImage(e) {

@@ -63,8 +63,9 @@ Triangulate.Result.prototype.getPoints = function() {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
     var delaunay_points = [];
+    var discard = option_selectors.percent_of_points_to_discard|0;
     for (var j = 0; j < numPoints; ++j) {
-        if (getRandomInt(0, 1000) > 500) continue;
+        if (getRandomInt(0, 100) < discard) continue;
         delaunay_points.push( [points[j].x, points[j].y] );
     }
 
