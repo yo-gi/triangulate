@@ -6,11 +6,13 @@
 
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <script src="jsfeat-min.js" type="text/javascript"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.5/dat.gui.js"></script>
     <script src="triangulate.js"></script>
 
 </head>
 <body>
     <h1>triangulate</h1>
+    <button id="submit">Triangulate</button>
 
     <input type="file" id="imageLoader" name="imageLoader"/>
     <canvas id="imageDisplay"></canvas>
@@ -20,8 +22,25 @@
             imgLoader.addEventListener('change', uploadImage, false);
         var canvas = document.getElementById('imageDisplay');
         var context = canvas.getContext('2d');
-        var imageData;
+        var imageData, imageData_orig;
 
+        /* GUI */
+        var gui = new dat.GUI();
+        var selectors = function() {
+            this.laplace_thresh = 33;
+            this.eigen_thresh = 36;
+            this.num_steps = 6;
+            this.deviation = 100;
+            this.num_color_sample_points = 10;
+        };
+        option_selectors = new selectors();
+        gui.add(this.option_selectors, "laplace_thresh", 1, 100);
+        gui.add(this.option_selectors, "eigen_thresh", 1, 100);
+        gui.add(this.option_selectors, 'num_steps', 1, 100);
+        gui.add(this.option_selectors, 'deviation', 1, 500);
+        gui.add(this.option_selectors, 'num_color_sample_points', 1, 100);
+
+        /* Upload Image Button */
         function uploadImage(e) {
             var reader = new FileReader();
             reader.onload = function(event) {
@@ -30,21 +49,23 @@
                     canvas.width = img.width;
                     canvas.height = img.height;
                     context.drawImage(img, 0, 0);
-                    imageData = context.getImageData(0, 0, canvas.width, canvas.height);
                 };
                 img.src = event.target.result;
             };
             reader.readAsDataURL(e.target.files[0]);
         }
+        /* Submit Button */
+        document.getElementById("submit").onclick = function() {
+            imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+            draw();
+        };
 
-        var triangulate = new Triangulate({
-
-        });
-
+        /* Processing Functions */
+        var triangulate = new Triangulate({});
         function draw() {
             console.log("drawing");
-            var img = Triangulate.generate(canvas.width, canvas.height, imageData);
-            document.body.setAttribute('style', 'background-image: ' + img.dataUrl);
+            var img = triangulate.generate(canvas.width, canvas.height, imageData);
+            // document.body.setAttribute('style', 'background-image: ' + img.dataUrl);
         }
     </script>
 
