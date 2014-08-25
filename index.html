@@ -27,11 +27,11 @@
         /* GUI */
         var gui = new dat.GUI();
         var selectors = function() {
-            this.laplace_thresh = 33;
-            this.eigen_thresh = 36;
-            this.num_steps = 6;
+            this.laplace_thresh = 10;
+            this.eigen_thresh = 10;
+            this.num_steps = 15;
             this.deviation = 100;
-            this.num_color_sample_points = 10;
+            this.num_color_sample_points = 15;
         };
         option_selectors = new selectors();
         gui.add(this.option_selectors, "laplace_thresh", 1, 100);
@@ -64,7 +64,7 @@
         var triangulate = new Triangulate({});
         function draw() {
             console.log("drawing");
-            var img = triangulate.generate(canvas.width, canvas.height, imageData);
+            var img = triangulate.generate(canvas.width, canvas.height);
             // document.body.setAttribute('style', 'background-image: ' + img.dataUrl);
         }
     </script>

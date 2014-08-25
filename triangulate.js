@@ -20,7 +20,7 @@ if (typeof module !== 'undefined' && module.exports)
     module.exports = Triangulate;
 }
 
-Triangulate.Result = function(options, width, height, imageData) {
+Triangulate.Result = function(options, width, height) {
     /* Options */
     this.options = options;
     this.width = width;
@@ -30,10 +30,10 @@ Triangulate.Result = function(options, width, height, imageData) {
     // x    var serializer = new XMLSerializer();
     // this.svgString = serializer.serializeToString(this.svg);
 
-    /* Objects */
+    /* Objects & Calls */
     this.triangles = this.generateTriangles();
     this.colors = this.generateColors();
-    this.paint = this.Paint();
+    this.Paint();
     this.svg = this.generateSVG();
 };
 
@@ -64,7 +64,7 @@ Triangulate.Result.prototype.getPoints = function() {
     }
     var delaunay_points = [];
     for (var j = 0; j < numPoints; ++j) {
-        if (getRandomInt(0, 1000) > 150) continue;
+        if (getRandomInt(0, 1000) > 500) continue;
         delaunay_points.push( [points[j].x, points[j].y] );
     }
 
@@ -85,6 +85,10 @@ Triangulate.Result.prototype.getPoints = function() {
         delaunay_points.push( [0, delta] );
         delaunay_points.push( [this.width-1, delta] );
     }
+    delaunay_points.push( [0, 0] );
+    delaunay_points.push( [this.width, 0] );
+    delaunay_points.push( [0, this.height] );
+    delaunay_points.push( [this.width, this.height] );
 
     // Add random point noise
     var x = -1;
@@ -97,7 +101,7 @@ Triangulate.Result.prototype.getPoints = function() {
             delaunay_points.push( [x, y] );
         }
     }
-
+    /*
     function render_points(corners, count, img, step) {
         var pix = (0xff << 24) | (0x00 << 16) | (0xff << 8) | 0x00;
         for(var i=0; i < count; ++i)
@@ -112,8 +116,10 @@ Triangulate.Result.prototype.getPoints = function() {
             img[off+step] = pix;
         }
     }
-    /* Display points of interest on context */
+    // Display points of interest on context
     render_points(points, numPoints, data_u32, this.width);
+    */
+
     context.putImageData(this.imageData, 0, 0);
 
     return delaunay_points;
@@ -121,18 +127,7 @@ Triangulate.Result.prototype.getPoints = function() {
 
 Triangulate.Result.prototype.generateTriangles = function() {
     var points = this.getPoints();
-    var triangles = d3.geom.delaunay(points);
-
-    context.strokeStyle = "#FFFFFF";
-    context.beginPath();
-    triangles.forEach(function(element, index, array) {
-        context.moveTo(element[0][0], element[0][1]);
-        context.lineTo(element[1][0], element[1][1]);
-        context.lineTo(element[2][0], element[2][1]);
-    });
-    context.stroke();
-
-    return triangles;
+    return d3.geom.delaunay(points);
 };
 
 Triangulate.Result.prototype.generateColors = function() {
@@ -180,7 +175,21 @@ Triangulate.Result.prototype.generateColors = function() {
 };
 
 Triangulate.Result.prototype.Paint = function() {
+    var color, colorString;
+    var colors = this.colors;
+    this.triangles.forEach(function(element, index, array) {
+        color = colors[index];
+        colorString = "rgb("+String(color[0])+ "," + String(color[1]) + "," + String(color[2]) + ")";
 
+        context.strokeStyle = colorString;
+        context.fillStyle = colorString;
+        context.beginPath();
+        context.moveTo(element[0][0], element[0][1]);
+        context.lineTo(element[1][0], element[1][1]);
+        context.lineTo(element[2][0], element[2][1]);
+        context.closePath();
+        context.fill();
+    });
 };
 
 Triangulate.Result.prototype.generateSVG = function() {
