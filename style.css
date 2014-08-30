@@ -1,0 +1,52 @@
+
+.wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    overflow-x: hidden;
+
+    background-color: #373737;
+}
+
+#header > h1 {
+    position: relative;
+    left: 60px;
+
+    color: white;
+}
+
+#buttons {
+    position: relative;
+    left: 60px;
+}
+
+#buttons > .col-md-1 {
+    margin-right: 15px;
+}
+
+.upload-button,
+.triangulate-button {
+    position: relative;
+    overflow: hidden;
+}
+
+.upload-button input#imageLoader
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+}
+
+.canvas-container {
+    margin: 15px 0px 15px 45px;
+}
+
+.canvas-container > #imageDisplay {
+    width: 95%;
+}

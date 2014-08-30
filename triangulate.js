@@ -27,14 +27,10 @@ Triangulate.Result = function(options, width, height) {
     this.height = height;
     this.imageData = context.getImageData(0, 0, canvas.width, canvas.height);
 
-    // x    var serializer = new XMLSerializer();
-    // this.svgString = serializer.serializeToString(this.svg);
-
     /* Objects & Calls */
     this.triangles = this.generateTriangles();
     this.colors = this.generateColors();
     this.Paint();
-    this.svg = this.generateSVG();
 };
 
 Triangulate.prototype.generate = function(width, height, imageData) {
@@ -102,24 +98,6 @@ Triangulate.Result.prototype.getPoints = function() {
             delaunay_points.push( [x, y] );
         }
     }
-    /*
-    function render_points(corners, count, img, step) {
-        var pix = (0xff << 24) | (0x00 << 16) | (0xff << 8) | 0x00;
-        for(var i=0; i < count; ++i)
-        {
-            var x = corners[i].x;
-            var y = corners[i].y;
-            var off = (x + y * step);
-            img[off] = pix;
-            img[off-1] = pix;
-            img[off+1] = pix;
-            img[off-step] = pix;
-            img[off+step] = pix;
-        }
-    }
-    // Display points of interest on context
-    render_points(points, numPoints, data_u32, this.width);
-    */
 
     context.putImageData(this.imageData, 0, 0);
 
@@ -153,6 +131,7 @@ Triangulate.Result.prototype.generateColors = function() {
     var r, g, b;
     var sample_points = option_selectors.num_color_sample_points|0;
 
+    /* Average Colors */
     triangles.forEach(function(element, index, array) {
         x = element[0];
         y = element[1];
@@ -172,6 +151,30 @@ Triangulate.Result.prototype.generateColors = function() {
                      Math.round(b/sample_points)]);
     });
 
+    /* Take median of colors
+    triangles.forEach(function(element, index, array) {
+        x = element[0];
+        y = element[1];
+        z = element[2];
+        r = [];
+        g = [];
+        b = [];
+        for (var i = 0; i < sample_points; ++i) {
+            point = genPoint(x, y, z);
+            colorData = context.getImageData(point[0], point[1], 1, 1).data;
+            r.push(colorData[0]);
+            g.push(colorData[1]);
+            b.push(colorData[2]);
+        }
+        r.sort();
+        g.sort();
+        b.sort();
+
+        colors.push([r[Math.round(sample_points/2)],
+                     g[Math.round(sample_points/2)],
+                     g[Math.round(sample_points/2)]]);
+    });
+    */
     return colors;
 };
 
@@ -196,3 +199,22 @@ Triangulate.Result.prototype.Paint = function() {
 Triangulate.Result.prototype.generateSVG = function() {
 
 };
+
+/*
+ function render_points(corners, count, img, step) {
+ var pix = (0xff << 24) | (0x00 << 16) | (0xff << 8) | 0x00;
+ for(var i=0; i < count; ++i)
+ {
+ var x = corners[i].x;
+ var y = corners[i].y;
+ var off = (x + y * step);
+ img[off] = pix;
+ img[off-1] = pix;
+ img[off+1] = pix;
+ img[off-step] = pix;
+ img[off+step] = pix;
+ }
+ }
+ // Display points of interest on context
+ render_points(points, numPoints, data_u32, this.width);
+ */
