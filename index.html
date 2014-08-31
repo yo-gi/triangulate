@@ -15,19 +15,37 @@
 <body>
     <div class="wrapper">
         <div class="row" id="header">
-            <h1>triangulate</h1>
+            <h1 class="col-md-2">triangulate</h1>
+            <a class="col-md-3" id="name" href="https://github.com/syogesh">by yogesh seetharaman,</a>
+            <a class="col-md-5" id="text" href="https://github.com/syogesh/triangulate">view on github</a>
+        </div>
+        <div class="row" id="explanation">
+            <p class="text">
+                Convert images into triangle graphics
+            </p>
         </div>
         <div class="row" id="buttons">
-            <div class="col-md-1 btn btn-default triangulate-button">
-                <span id="submit">process</span>
-            </div>
-            <div class="col-md-1 btn btn-default upload-button">
+            <span class="text">1. </span>
+            <div class="btn btn-default upload-button">
                 <span>upload image</span>
                 <input type="file" id="imageLoader" name="imageLoader"/>
             </div>
+            <span class="text">2. </span>
+            <div class="btn btn-default triangulate-button">
+                <span id="submit">process</span>
+            </div>
+            <span class="text">3. </span>
+            <iframe src="http://ghbtns.com/github-btn.html?user=syogesh&repo=triangulate&type=watch&count=true&size=large" allowtransparency="true" frameborder="0" scrolling="0" width="150" height="30"></iframe>
         </div>
         <div class="canvas-container" id="image align-center">
-            <canvas id="imageDisplay"></canvas>
+            <canvas id="imageDisplay" height=0></canvas>
+        </div>
+        <div class="row" id="info">
+
+        </div>
+        <div class="row" id="footer">
+            <p>
+            </p>
         </div>
     </div>
 
@@ -72,6 +90,7 @@
             };
             reader.readAsDataURL(e.target.files[0]);
         }
+
         /* Submit Button */
         document.getElementById("submit").onclick = function() {
             imageData = context.getImageData(0, 0, canvas.width, canvas.height);

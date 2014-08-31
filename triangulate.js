@@ -1,28 +1,7 @@
-function Triangulate(options) {
-    if (typeof options === 'undefined') options = {};
+function Triangulate() {}
 
-    function getDefault(_option, _default) {
-        return (typeof _option !== 'undefined') ? _option : _default;
-    }
-
-    this.options = {
-        format: getDefault(options.format, 'svg'),
-        numSteps: getDefault(options.numSteps, 10)
-    };
-}
-
-if (typeof module !== 'undefined' && module.exports)
-{
-    d3 = require("d3");
-
-    XMLSerializer = require("xmldom").XMLSerializer;
-
-    module.exports = Triangulate;
-}
-
-Triangulate.Result = function(options, width, height) {
+Triangulate.Result = function(width, height) {
     /* Options */
-    this.options = options;
     this.width = width;
     this.height = height;
     this.imageData = context.getImageData(0, 0, canvas.width, canvas.height);
@@ -34,7 +13,7 @@ Triangulate.Result = function(options, width, height) {
 };
 
 Triangulate.prototype.generate = function(width, height, imageData) {
-    return new Triangulate.Result(this.options, width, height, imageData);
+    return new Triangulate.Result(width, height, imageData);
 };
 
 Triangulate.Result.prototype.getPoints = function() {
@@ -151,30 +130,6 @@ Triangulate.Result.prototype.generateColors = function() {
                      Math.round(b/sample_points)]);
     });
 
-    /* Take median of colors
-    triangles.forEach(function(element, index, array) {
-        x = element[0];
-        y = element[1];
-        z = element[2];
-        r = [];
-        g = [];
-        b = [];
-        for (var i = 0; i < sample_points; ++i) {
-            point = genPoint(x, y, z);
-            colorData = context.getImageData(point[0], point[1], 1, 1).data;
-            r.push(colorData[0]);
-            g.push(colorData[1]);
-            b.push(colorData[2]);
-        }
-        r.sort();
-        g.sort();
-        b.sort();
-
-        colors.push([r[Math.round(sample_points/2)],
-                     g[Math.round(sample_points/2)],
-                     g[Math.round(sample_points/2)]]);
-    });
-    */
     return colors;
 };
 
@@ -195,26 +150,3 @@ Triangulate.Result.prototype.Paint = function() {
         context.fill();
     });
 };
-
-Triangulate.Result.prototype.generateSVG = function() {
-
-};
-
-/*
- function render_points(corners, count, img, step) {
- var pix = (0xff << 24) | (0x00 << 16) | (0xff << 8) | 0x00;
- for(var i=0; i < count; ++i)
- {
- var x = corners[i].x;
- var y = corners[i].y;
- var off = (x + y * step);
- img[off] = pix;
- img[off-1] = pix;
- img[off+1] = pix;
- img[off-step] = pix;
- img[off+step] = pix;
- }
- }
- // Display points of interest on context
- render_points(points, numPoints, data_u32, this.width);
- */

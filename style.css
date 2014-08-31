@@ -1,52 +1,75 @@
-
 .wrapper {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-
-    overflow-x: hidden;
-
-    background-color: #373737;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  background-color: #F8F8F8;
 }
-
-#header > h1 {
-    position: relative;
-    left: 60px;
-
-    color: white;
+.wrapper #header h1 {
+  left: 60px;
+  color: #373737;
 }
-
-#buttons {
-    position: relative;
-    left: 60px;
+.wrapper #header #name {
+  top: 35px;
+  margin-left: 60px;
+  color: #373737;
+  text-decoration: underline;
+  font: 400 24px sans-serif;
 }
-
-#buttons > .col-md-1 {
-    margin-right: 15px;
+.wrapper #header #text {
+  top: 40px;
+  text-decoration: none;
+  font: 300 16px sans-serif;
 }
-
-.upload-button,
-.triangulate-button {
-    position: relative;
-    overflow: hidden;
+.wrapper #explanation {
+  position: relative;
+  left: 75px;
 }
-
-.upload-button input#imageLoader
-{
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 0;
-    padding: 0;
-    font-size: 20px;
-    cursor: pointer;
-    opacity: 0;
+.wrapper #explanation p {
+  font: 300 16px sans-serif;
 }
-
-.canvas-container {
-    margin: 15px 0px 15px 45px;
+.wrapper #buttons {
+  position: relative;
+  left: 60px;
 }
-
-.canvas-container > #imageDisplay {
-    width: 95%;
+.wrapper #buttons .text {
+  position: relative;
+  color: #373737;
+  font: 500 16px sans-serif;
+}
+.wrapper #buttons .btn {
+  margin-right: 30px;
+}
+.wrapper #buttons iframe {
+  position: relative;
+  top: 12px;
+}
+.wrapper .upload-button,
+.wrapper .triangulate-button {
+  position: relative;
+  overflow: hidden;
+}
+.wrapper .upload-button input#imageLoader {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  cursor: pointer;
+  opacity: 0;
+}
+.wrapper .canvas-container {
+  margin: 15px 0px 15px 45px;
+}
+.wrapper .canvas-container #imageDisplay {
+  width: 95%;
+  height: 50%;
+}
+.wrapper #info {
+  margin: 60px;
+}
+.wrapper #footer {
+  color: #373737;
+  margin: 60px;
 }
