@@ -1,8 +1,6 @@
 Triangulate
 ===========
 
-Convert images into triangle graphics
-
 Before:
 <img style="float: left" src="images/fox-before.jpg">
 After:
