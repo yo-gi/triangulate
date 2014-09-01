@@ -61,9 +61,11 @@
 }
 .wrapper .canvas-container {
   margin: 15px 0px 15px 45px;
+  position: relative;
+  left: 20px;
 }
 .wrapper .canvas-container #imageDisplay {
-  width: 95%;
+  width: 93%;
   height: 50%;
 }
 .wrapper #before-after {
