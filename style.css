@@ -66,10 +66,10 @@
   width: 95%;
   height: 50%;
 }
-.wrapper #info {
-  margin: 60px;
+.wrapper #before-after {
+  margin-left: 47px;
+  margin-right: 47px;
 }
-.wrapper #footer {
-  color: #373737;
-  margin: 60px;
+.wrapper #info {
+  margin: 40px;
 }

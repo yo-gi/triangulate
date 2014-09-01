@@ -40,12 +40,32 @@
         <div class="canvas-container" id="image align-center">
             <canvas id="imageDisplay" height=0></canvas>
         </div>
-        <div class="row" id="info">
-
-        </div>
-        <div class="row" id="footer">
+        <div class="row info">
             <p>
+
             </p>
+        </div>
+        <div class="row" id="before-after">
+            <div class="col-md-6" id="before">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Before</div>
+                    <div class="panel-body">
+                        <a href="#" class="thumbnail">
+                            <img src="images/fox-before.jpg">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" id="after">
+                <div class="panel panel-default">
+                    <div class="panel-heading">After</div>
+                    <div class="panel-body">
+                        <a href="#" class="thumbnail">
+                            <img src="images/fox-after.jpg">
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -60,6 +80,7 @@
 
         /* GUI */
         var gui = new dat.GUI({ width: 450 });
+        gui.close();
         var selectors = function() {
             this.laplace_thresh = 10;
             this.eigen_thresh = 10;
@@ -102,7 +123,6 @@
         function draw() {
             console.log("drawing");
             var img = triangulate.generate(canvas.width, canvas.height);
-            // document.body.setAttribute('style', 'background-image: ' + img.dataUrl);
         }
     </script>
 
